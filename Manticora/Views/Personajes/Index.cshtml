@@ -1,0 +1,35 @@
+﻿@model PersonajesViewModel
+
+<form method="get" asp-action="Index">
+	<input type="text" name="nombre" value="@Model.NombreFiltro" placeholder="Buscar por nombre" />
+	<button type="submit">Buscar</button>
+</form>
+
+@foreach (var personaje in Model.Personajes)
+{
+	<div>
+		<img src="@personaje.ImagenUrl" alt="@personaje.Nombre" />
+		<p>@personaje.Nombre</p>
+		<p>@personaje.Especie</p>
+		<p>@personaje.Tipo</p>
+		<p>@personaje.Genero</p>
+		<a class="btn btn-default btn-success" href="@Url.Action("Detalle", "Personajes", new { id = personaje.Id, pagina = Model.PaginaActual })">Ver Detalles</a>
+	</div>
+}
+
+<div>
+	@if (Model.PaginaActual > 1)
+	{
+		<a asp-action="Index" asp-route-nombre="@Model.NombreFiltro" asp-route-pagina="@(Model.PaginaActual - 1)">Anterior</a>
+	}
+
+	@for (int i = 1; i <= Model.TotalPaginas; i++)
+	{
+		<a asp-action="Index" asp-route-nombre="@Model.NombreFiltro" asp-route-pagina="@i">@i</a>
+	}
+
+	@if (Model.PaginaActual < Model.TotalPaginas)
+	{
+		<a asp-action="Index" asp-route-nombre="@Model.NombreFiltro" asp-route-pagina="@(Model.PaginaActual + 1)">Siguiente</a>
+	}
+</div>

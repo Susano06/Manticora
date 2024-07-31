@@ -1,0 +1,18 @@
+﻿@model List<Arma>
+
+<h2>Tienda</h2>
+
+@foreach (var arma in Model)
+{
+    <div>
+        <h3>@arma.Nombre</h3>
+        <p>Costo: @arma.Costo oros</p>
+        <p>Alcance: @arma.Alcance</p>
+        <form asp-action="Comprar" method="post">
+            <input type="hidden" name="Nombre" value="@arma.Nombre" />
+            <input type="hidden" name="Costo" value="@arma.Costo" />
+            <input type="hidden" name="Alcance" value="@arma.Alcance" />
+            <button type="submit">Comprar</button>
+        </form>
+    </div>
+}
