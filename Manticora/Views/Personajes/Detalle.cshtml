@@ -1,9 +1,11 @@
 ﻿@model Personaje
 
-<div>
-    <img src="@Model.ImagenUrl" alt="@Model.Nombre" />
-    <h2>@Model.Nombre</h2>
-    <p>Especie: @Model.Especie</p>
-    <p>Tipo: @Model.Tipo</p>
-    <p>Género: @Model.Genero</p>
+<div class="character-detail">
+    <img src="@Model.ImagenUrl" alt="@Model.Nombre" class="character-image" >
+    <div class="character-info">
+        <h1>@Model.Nombre</h1>
+        <p>Especie: @Model.Especie</p>
+        <p>Tipo: @Model.Tipo</p>
+        <p>Género: @Model.Genero</p>
+    </div>
 </div>

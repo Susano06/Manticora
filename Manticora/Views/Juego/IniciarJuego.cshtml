@@ -1,0 +1,31 @@
+﻿@model Juego
+
+<h2>Juego Iniciado</h2>
+<p>Nación Atacante: @Model.NacionAtacante.Nombre</p>
+<p>Tipo: @Model.NacionAtacante.Tipo</p>
+<p>Dimensión: @Model.NacionAtacante.Dimension</p>
+<p>Habitantes: @Model.NacionAtacante.Habitantes</p>
+
+<h3>Estado del Juego</h3>
+<p>Ronda: @Model.RondaActual</p>
+<p>Ciudad: @Model.Ciudad.Vida/15</p>
+<p>Mantícora: @Model.Manticora.Vida/10</p>
+
+@foreach (var defensor in Model.Defensores)
+{
+    <div>
+        <h4>@defensor.Nombre</h4>
+        <p>Especie: @defensor.Especie</p>
+        <p>Tipo: @defensor.Tipo</p>
+        <p>Género: @defensor.Genero</p>
+        <h5>Inventario</h5>
+        @foreach (var arma in defensor.Inventario)
+        {
+            <form asp-action="Disparar" method="post">
+                <input type="hidden" name="idPersonaje" value="@defensor.Id" />
+                <input type="hidden" name="armaNombre" value="@arma.Nombre" />
+                <button type="submit">@arma.Nombre - Alcance: @arma.Alcance</button>
+            </form>
+        }
+    </div>
+}

@@ -35,9 +35,9 @@ namespace Manticora.Controllers
             return View(viewModel);
         }
 
-        public async Task<IActionResult> Detalle(int id, int pagina)
+        public async Task<IActionResult> Detalle(int id, string nombre)
         {
-            var response = await _rickAndMortyApiService.ObtenerPersonajes("", pagina);
+            var response = await _rickAndMortyApiService.ObtenerPersonajes(nombre);
             var personajeList = response.Results.Select(r => new Personaje
             {
                 Id = r.Id,
