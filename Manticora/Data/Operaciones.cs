@@ -1,5 +1,8 @@
 ﻿using Manticora.Models;
 using Manticora.Services;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Security.Principal;
 
 namespace Manticora.Data
 {
@@ -9,19 +12,9 @@ namespace Manticora.Data
 
         public Operaciones(JuegoContext context) => _context = context;
 
-        public async Task GuardarJuegoAsync(Juego juego)
+        public async Task GuardarJuegoAsync(JuegoDto juego)
         {
-
-            var juegoDto = new JuegoDto
-            {
-                NacionAtacante = (NacionAtacanteDto)juego.NacionAtacante,
-                VidaManticora = juego.VidaManticora,
-                VidaCiudad = juego.VidaCiudad,
-                RondaActual = juego.RondaActual,
-                Estado = juego.Estado
-            };
-
-            _context.Juegos.Add(juegoDto);
+            _context.Juegos.Add(juego);
             await _context.SaveChangesAsync();
         }
 
@@ -36,6 +29,51 @@ namespace Manticora.Data
             };
             _context.Armas.Add(armaDto);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task GuardarDefensorAsync(Personaje personaje)
+        {
+            var defensor = new DefensorDto
+            {
+                Id = personaje.Id,
+                Nombre = personaje.Nombre,
+                Genero = personaje.Genero,
+                Especie = personaje.Especie,
+                Tipo = personaje.Tipo
+            };
+            _context.Defensores.Add(defensor);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<DefensorDto>> ObtenerDefensor()
+        {
+            var defensores = await _context.Defensores.ToListAsync();
+            var armas = await ObtenerArma();
+
+
+            foreach (var item in defensores)
+            {
+                foreach (var gun in armas)
+                {
+                    item.Inventario = new List<ArmaDto>() { 
+                        new ArmaDto { 
+                            
+                            //Id = gun.Id,
+                            Nombre = gun.Nombre,
+                            Alcance = gun.Alcance,
+                            Costo = gun.Costo                            
+                        } 
+                    } ;
+                }
+            }
+
+            return defensores;
+        }
+
+        public async Task<List<ArmaDto>> ObtenerArma()
+        {
+            var armas = await _context.Armas.ToListAsync();
+            return armas;
         }
     }
 }

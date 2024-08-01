@@ -19,14 +19,16 @@ namespace Manticora.Controllers
         public async Task<IActionResult> IniciarJuego()
         {
             var nacionAtacante = await _rickAndMortyApiService.ObtenerNacionAtacante();
+            var defensores = await _operacionesDBService.ObtenerDefensor();
 
-            var juego = new Juego
+            var juego = new JuegoDto
             {
                 NacionAtacante = nacionAtacante,
                 VidaManticora = 10,
                 VidaCiudad = 15,
                 RondaActual = 1,
-                Estado = "Iniciado"
+                Estado = "Iniciado",
+                Defensores = defensores
             };
 
             //// Guardar el estado inicial del juego en la base de datos

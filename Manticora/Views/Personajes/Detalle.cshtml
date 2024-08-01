@@ -7,5 +7,13 @@
         <p>Especie: @Model.Especie</p>
         <p>Tipo: @Model.Tipo</p>
         <p>Género: @Model.Genero</p>
+        <form asp-action="SeleccionarPersonaje" asp-controller="Personajes" method="post">
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <input type="hidden" name="Nombre" value="@Model.Nombre" />
+            <input type="hidden" name="Especie" value="@Model.Especie" />
+            <input type="hidden" name="Tipo" value="@Model.Tipo" />
+            <input type="hidden" name="Genero" value="@Model.Genero" />
+            <button type="submit" class="btn btn-success">Seleccionar</button>
+        </form>
     </div>
 </div>

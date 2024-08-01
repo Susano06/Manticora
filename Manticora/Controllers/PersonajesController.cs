@@ -7,10 +7,12 @@ namespace Manticora.Controllers
     public class PersonajesController : Controller
     {
         private readonly IRickAndMortyApiService _rickAndMortyApiService;
+        private readonly IOperacionesDBService _operacionesDBService;
 
-        public PersonajesController(IRickAndMortyApiService rickAndMortyApiService)
+        public PersonajesController(IRickAndMortyApiService rickAndMortyApiService, IOperacionesDBService operacionesDBService)
         {
             _rickAndMortyApiService = rickAndMortyApiService;
+            _operacionesDBService = operacionesDBService;
         }
 
         public async Task<IActionResult> Index(string nombre = "", int pagina = 1)
@@ -50,6 +52,14 @@ namespace Manticora.Controllers
             var personaje = personajeList.FirstOrDefault(p => p.Id == id);
             if (personaje == null) return NotFound();
             return View(personaje);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SeleccionarPersonaje(Personaje personaje)
+        {
+            await _operacionesDBService.GuardarDefensorAsync(personaje);
+
+            return RedirectToAction("Index");
         }
     }
 }

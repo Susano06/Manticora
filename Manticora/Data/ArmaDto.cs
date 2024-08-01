@@ -9,5 +9,7 @@ namespace Manticora.Data
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        public int PersonajeId { get; set; } // Clave foránea
+        public DefensorDto Personaje { get; set; } // Navegación inversa
     }
 }

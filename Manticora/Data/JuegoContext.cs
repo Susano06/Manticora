@@ -9,23 +9,25 @@ namespace Manticora.Data
         {
         }
 
-        //public DbSet<Personaje> Personajes { get; set; }
-        public DbSet<ArmaDto> Armas { get; set; }
-        
-        //public DbSet<NacionAtacante> NacionesAtacantes { get; set; }
+        public DbSet<DefensorDto> Defensores { get; set; }
+        public DbSet<ArmaDto> Armas { get; set; }        
+        public DbSet<NacionAtacanteDto> NacionesAtacantes { get; set; }
         public DbSet<JuegoDto> Juegos { get; set; }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    base.OnModelCreating(modelBuilder);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
-        //    modelBuilder.Entity<Personaje>()
-        //        .HasMany(p => p.Inventario)
-        //        .WithOne(a => a.Personaje)
-        //        .HasForeignKey(a => a.PersonajeId);
+            modelBuilder.Entity<DefensorDto>()
+                .HasMany(p => p.Inventario)
+                .WithOne(a => a.Personaje)
+                .HasForeignKey(a => a.PersonajeId);
 
-        //    // Configuración adicional si es necesario
-        //}
+            modelBuilder.Entity<JuegoDto>()
+                .HasMany(p => p.Defensores)
+                .WithOne(a => a.Juego)
+                .HasForeignKey(a => a.IdJuego);
+        }
 
     }
 }

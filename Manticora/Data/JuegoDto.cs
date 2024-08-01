@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Manticora.Data
 {
-    public class JuegoDto : Juego
+    public class JuegoDto
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

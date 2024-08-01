@@ -1,4 +1,5 @@
-﻿using Manticora.Models;
+﻿using Manticora.Data;
+using Manticora.Models;
 using System.Net.Http;
 
 namespace Manticora.Services
@@ -14,13 +15,13 @@ namespace Manticora.Services
             _Configuration = configuration;
         }
 
-        public async Task<NacionAtacante> ObtenerNacionAtacante()
+        public async Task<NacionAtacanteDto> ObtenerNacionAtacante()
         {
             var response = await _httpClient.GetAsync($"{_Configuration["Rickandmortyapi"]}location/");
 			response.EnsureSuccessStatusCode();
 			var data = await response.Content.ReadAsAsync<ApiLocationResponse>();
             var location = data?.Results?[new Random().Next(data.Results.Count)];
-            return new NacionAtacante
+            return new NacionAtacanteDto
             {
                 Nombre = location?.Name,
                 Tipo = location?.Type,
