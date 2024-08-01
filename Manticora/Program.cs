@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient<IRickAndMortyApiService, RickAndMortyApiService>();
+builder.Services.AddScoped<IOperacionesDBService, Operaciones>();
 
 //Se agrega la configuración para el uso de una BD en memoria
 builder.Services.AddDbContext<JuegoContext>(options => options.UseInMemoryDatabase("JuegoDB"));

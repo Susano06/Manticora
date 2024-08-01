@@ -1,11 +1,18 @@
 ﻿using Manticora.Models;
+using Manticora.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Manticora.Controllers
 {
 	public class TiendaController : Controller
 	{
-		public IActionResult Index()
+        private readonly IOperacionesDBService _operacionesDBService;
+
+        public TiendaController(IOperacionesDBService operacionesDBService)
+        {
+            _operacionesDBService = operacionesDBService;
+        }
+        public IActionResult Index()
 		{
 			var armas = new List<Arma>
 		{
@@ -19,10 +26,12 @@ namespace Manticora.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Comprar(Arma arma)
+		public async Task<IActionResult> Comprar(Arma arma)
 		{
-			// Lógica para comprar el arma y agregarla al inventario del personaje
-			return RedirectToAction("Index");
+            // Lógica para comprar el arma y agregarla al inventario del personaje
+            await _operacionesDBService.GuardarArmaAsync(arma);
+
+            return RedirectToAction("Index");
 		}
 	}
 }

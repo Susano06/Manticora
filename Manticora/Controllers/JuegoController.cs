@@ -1,35 +1,36 @@
 ﻿using Manticora.Services;
 using Microsoft.AspNetCore.Mvc;
 using Manticora.Models;
+using Manticora.Data;
 
 namespace Manticora.Controllers
 {
     public class JuegoController : Controller
     {
         private readonly IRickAndMortyApiService _rickAndMortyApiService;
+        private readonly IOperacionesDBService _operacionesDBService;
 
-        public JuegoController(IRickAndMortyApiService rickAndMortyApiService)
+        public JuegoController(IRickAndMortyApiService rickAndMortyApiService, IOperacionesDBService operacionesDBService)
         {
             _rickAndMortyApiService = rickAndMortyApiService;
+            _operacionesDBService = operacionesDBService;
         }
 
         public async Task<IActionResult> IniciarJuego()
         {
             var nacionAtacante = await _rickAndMortyApiService.ObtenerNacionAtacante();
-            var mantícora = new Manticoras { Vida = 10 };
-            var ciudad = new Ciudad { Vida = 15 };
 
             var juego = new Juego
             {
                 NacionAtacante = nacionAtacante,
-                Manticora = mantícora,
-                Ciudad = ciudad,
+                VidaManticora = 10,
+                VidaCiudad = 15,
                 RondaActual = 1,
                 Estado = "Iniciado"
             };
 
-            // Guardar el estado inicial del juego en la base de datos
-            // ...
+            //// Guardar el estado inicial del juego en la base de datos
+            await _operacionesDBService.GuardarJuegoAsync(juego);
 
             return View(juego);
         }

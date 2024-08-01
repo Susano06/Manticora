@@ -1,4 +1,6 @@
-﻿namespace Manticora.Models
+﻿using Manticora.Data;
+
+namespace Manticora.Models
 {
     public class Personaje
     {
@@ -9,7 +11,6 @@
         public string? Genero { get; set; }
         public string? ImagenUrl { get; set; }
         public int Oro { get; set; } = 100;
-        public List<Arma> Inventario { get; set; } = new List<Arma>();
     }
 
 }

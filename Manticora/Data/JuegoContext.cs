@@ -8,13 +8,24 @@ namespace Manticora.Data
         public JuegoContext(DbContextOptions options) : base(options)
         {
         }
-        public DbSet<Personaje> Personajes { get; set; }
-        public DbSet<Arma> Armas { get; set; }
-        public DbSet<NacionAtacante> NacionesAtacantes { get; set; }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //public DbSet<Personaje> Personajes { get; set; }
+        public DbSet<ArmaDto> Armas { get; set; }
+        
+        //public DbSet<NacionAtacante> NacionesAtacantes { get; set; }
+        public DbSet<JuegoDto> Juegos { get; set; }
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
-        //    optionsBuilder.UseSqlite("Data Source=juego.db");
+        //    base.OnModelCreating(modelBuilder);
+
+        //    modelBuilder.Entity<Personaje>()
+        //        .HasMany(p => p.Inventario)
+        //        .WithOne(a => a.Personaje)
+        //        .HasForeignKey(a => a.PersonajeId);
+
+        //    // Configuración adicional si es necesario
         //}
+
     }
 }
